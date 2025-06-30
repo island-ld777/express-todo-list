@@ -44,6 +44,26 @@ app.put("/todos/:id", (req, res) => {
     return res.status(200).send();
 })
 
+app.delete("/todos/:id", (req, res) => {
+    const {
+        body,
+         params: {id},
+    } = req;
+    //console.log(body);
+    //console.log(id);
+    const parsedID = parseInt(id);
+    if(isNaN(parsedID)) return res.status(400).send("Invalid ID");
+
+    const findTaskIndex = data["todos"].findIndex((task) => task.id === parsedID);
+    if(findTaskIndex === -1) return res.status(404).send("Task not found.");
+    //console.log(findTaskIndex);
+    //console.log(data["todos"][findTaskIndex]);
+    data["todos"].splice(findTaskIndex, 1);
+    data_list_length--;
+    fs.writeFileSync(filePath, JSON.stringify(data), ['w', 'utf-8']);
+    return res.status(200).send();
+})
+
 
 app.listen(PORT, () => {
     console.log(`HELLO, WORLD! I AM FROM PORT: ${PORT}`);
