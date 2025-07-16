@@ -1,7 +1,9 @@
-export function listItem(props) {
+export function ListItem({item}) {
     return (
         <>
-        {/* <div>List Item goes here!</div> */}
+        <div>
+            <h3>{item.task} | {item.done ? <>Done</> : <>Not Done</>}</h3>
+        </div>
         </>
     );
 }

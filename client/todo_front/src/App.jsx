@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react'
+import { ListItem } from './Components/ListItem';
+import { ListForm } from './Components/ListForm';
 
+export const BASE_URL = "http://localhost:3001/";
 
 function App() {
   const [listData, setListData] = useState([]);
@@ -10,7 +13,7 @@ function App() {
     async function fetchListData() {
       try {
 
-        const response = await fetch("http://localhost:3001/todos");
+        const response = await fetch(`${BASE_URL}todos`);
 
         if(!response.ok) {
           throw new Error("Failed to fetch data!");
@@ -34,7 +37,8 @@ function App() {
   return (
     <>
       <h1>To-Do List</h1>
-      <div>{listData.map((listItem) => {return (<div>{listItem.task}</div>)})}</div>
+      <ListForm/>
+      <div>{listData.map((listItem) => {return (<ListItem key={listItem.id} item={listItem}/>)})}</div>
     </>
   )
 }
